@@ -5,6 +5,8 @@ import { postLoginAPI } from '../api/auth.apiUrl';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { message } from 'antd';
+import { UserInfo, userState } from '../recoil/atoms/userAtom';
+import { useSetRecoilState } from 'recoil';
 
 // Define the shape of the authentication payload
 interface AuthPayload {
@@ -17,7 +19,6 @@ interface DecodedToken {
     role: 'user' | 'admin' | 'guest';
 }
 
-// Define the shape of the API response
 interface AuthResponse {
     data: {
         access_token: string;
@@ -25,6 +26,7 @@ interface AuthResponse {
 }
 
 export const usePostAuth = () => {
+    const setUser = useSetRecoilState(userState);
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
@@ -33,23 +35,20 @@ export const usePostAuth = () => {
         onSuccess: (data) => {
             message.success('Login success');
             localStorage.setItem('access_token', data.data.access_token);
-            const access_token = localStorage.getItem('access_token');
-            if (access_token) {
-                const role = (jwtDecode(access_token) as DecodedToken).role;
-                switch (role) {
-                    case 'user': {
-                        navigate('/');
-                        break;
-                    }
-                    case 'admin': {
-                        navigate('/admin');
-                        break;
-                    }
-                    default: {
-                        navigate('/');
-                        break;
-                    }
-                }
+
+            const access_token = data.data.access_token;
+            const decoded = jwtDecode<UserInfo>(access_token);
+            setUser(decoded); 
+
+            switch (decoded.role) {
+                case 'user':
+                navigate('/');
+                break;
+                case 'admin':
+                navigate('/admin');
+                break;
+                default:
+                navigate('/');
             }
             queryClient.invalidateQueries({ queryKey: [QUERY_KEY.AUTH] });
         },

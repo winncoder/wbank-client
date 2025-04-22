@@ -1,5 +1,6 @@
 import { Layout, Row, Col } from 'antd';
 import { Outlet } from 'react-router-dom';
+import { useInitializeUser } from '../../hooks/useInitializeUser';
 // import UserSider from '../sidebar/userSider/UserSider';
 // import { useCheckAuthorization } from '../../hooks/useAuth';
 // import { PostProvider } from '../../components/context/PostContext';
@@ -8,6 +9,7 @@ const { Content } = Layout;
 
 const UserLayout = () => {
 	// useCheckAuthorization('user');
+	useInitializeUser();
 	return (
 		// <PostProvider>
 			<Layout>

@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import axios from 'axios';
 import Router from './routers/Router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RecoilRoot } from 'recoil';
 
 const queryClient = new QueryClient();
 
@@ -16,9 +17,12 @@ if (!rootElement) {
 }
 
 ReactDOM.createRoot(rootElement).render(
-	<QueryClientProvider client={queryClient}>
-		<Suspense fallback={<div>Loading...</div>}>
-			<RouterProvider router={Router} />
-		</Suspense>
-	</QueryClientProvider>
+	<RecoilRoot>
+		<QueryClientProvider client={queryClient}>
+			<Suspense fallback={<div>Loading...</div>}>
+				<RouterProvider router={Router} />
+			</Suspense>
+		</QueryClientProvider>
+	</RecoilRoot>
+
 );

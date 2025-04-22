@@ -1,29 +1,22 @@
 // Payment.tsx
-import{ useEffect, useState } from 'react';
+import{ useState } from 'react';
 import { Select, InputNumber, Button, Card, Divider, Skeleton, message, Modal} from 'antd';
 import './Payment.css';
 import { useGetUserDetail, useGetUsers } from '../../../hooks/useUser';
-import { jwtDecode } from 'jwt-decode'
 import { useCreateTransaction } from '../../../hooks/useTransaction';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { userState } from '../../../recoil/atoms/userAtom';
 
 
 const { Option } = Select;
-interface DecodedToken {
-    sub: string;
-  }
   
   export default function Payment() {
     const [amount, setAmount] = useState<number>(0);
     const [recipient, setRecipient] = useState<string>('');
-    const [myUserId, setMyUserId] = useState<string | null>(null);
   
-    useEffect(() => {
-      const token = localStorage.getItem('access_token');
-      if (token) {
-        const decoded = jwtDecode<DecodedToken>(token);
-        setMyUserId(decoded.sub);
-      }
-    }, []);
+    const myInfo = useRecoilValue(userState);
+    const myUserId = myInfo?.sub;
+    const resetUser = useResetRecoilState(userState);
 
     const { data: users, isPending: isUsersLoading } = useGetUsers({ username: recipient });
   
@@ -62,6 +55,7 @@ interface DecodedToken {
     
   const handleLogout = () => {
     localStorage.removeItem('access_token');
+    resetUser();
     window.location.href = '/auth';
   };
 

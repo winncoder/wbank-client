@@ -1,0 +1,89 @@
+.payment-container {
+    display: flex;
+    background: #f8f4f3;
+    height: 100vh;
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .sidebar {
+    width: 220px;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .profile img {
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+  }
+  
+  .menu p, .bottom-menu p {
+    margin: 12px 0;
+    cursor: pointer;
+  }
+  
+  .menu p.active {
+    color: #f72585;
+    font-weight: bold;
+  }
+  
+  .payment-main {
+    flex: 1;
+    padding: 0 40px;
+  }
+  
+  .balance {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .balance span {
+    font-weight: 600;
+    color: #222;
+  }
+  
+  .transfer-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  
+  .field-group {
+    margin-bottom: 20px;
+  }
+  
+  .amount-input,
+  .currency-select,
+  .recipient-select {
+    width: 100%;
+  }
+  
+  .payment-details {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  
+  .confirm-btn {
+    margin-top: 20px;
+    width: 100%;
+    background: #52c41a;
+    border: none;
+  }
+  
